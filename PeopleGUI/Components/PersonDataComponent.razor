@@ -1,0 +1,77 @@
+@rendermode InteractiveServer
+@using PeopleGUI.Model
+
+<div class="card" style="margin:0.5em;padding:1em;width: 18em;">
+	<h5 class="card-title">@person.LastName @person.FirstName</h5>
+	<div class="card-body">
+	<span style="font-size:0.7em"">Geburtsdatum:</span>
+	<br />
+	@person.DateOfBirth
+
+	@if ( postalAddresses.Count > 0 )
+	{
+		<hr />
+		@if ( postalAddresses.Count > 1 )
+		{
+			<span style="font-size:0.7em"">Adressen:</span>
+		}
+		else
+		{
+			<span style="font-size:0.7em"">Adresse:</span>
+		}
+		<br />		
+		@foreach (PostalAddress address in postalAddresses)
+		{
+			<div style="margin-bottom:0.5em;">
+				@address.Street @address.StreetNumber
+				<br />
+				@(address.GetPostcodeAsString() + " " + @address.Town)
+			</div>
+		}
+	}
+	
+	@if ( phoneNumbers.Count > 0 )
+	{
+		<hr />
+		@if ( phoneNumbers.Count > 1 )
+		{
+			<span style="font-size:0.7em"">Telefonnummern:</span>
+		}
+		else
+		{
+			<span style="font-size:0.7em"">Telefonnummer:</span>
+		}
+		<br />		
+		@foreach (Phone phone in phoneNumbers)
+		{
+			<div>
+				@phone.GetNumberAsString()
+			</div>
+		}
+	}
+	<br />
+	<div style="text-align:right;">
+	<button class="btn btn-primary" onclick="location.href='/person/@person.ID'" style="margin-top:1em;font-size:0.7em;position:absolute;bottom:1.5em;right:1.5em;">Details</button>
+	</div>
+	</div>
+</div>
+
+@code
+{
+	[Parameter]
+	public required Person person {get; set;}
+
+	[Parameter]
+	public required List<PostalAddress> postalAddresses {get; set;}
+
+	[Parameter]
+	public required List<Phone> phoneNumbers {get; set;}
+	private bool submitted = false;
+
+	private async Task submit()
+	{
+		submitted = true;		
+		await Task.Delay(1000);
+		submitted = false;
+	}
+}

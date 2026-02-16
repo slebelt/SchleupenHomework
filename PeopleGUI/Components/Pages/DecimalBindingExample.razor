@@ -1,0 +1,10 @@
+@page "/binding"
+@rendermode InteractiveServer
+
+<h3>Price Input</h3>
+<input @bind-value="Price" /> <!-- Bound to decimal property -->
+<p>Current Price: @Price</p> <!-- Display the bound property -->
+ 
+@code {
+    public decimal Price { get; set; } = 0.00m;
+}

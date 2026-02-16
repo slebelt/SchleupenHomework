@@ -1,0 +1,73 @@
+@page "/person/{personID}"
+@rendermode InteractiveServer
+
+<PageTitle>Adress-Liste</PageTitle>
+
+@if ( person != null )
+{
+	<div style="display:flex;flex-wrap:wrap;">
+		<section>
+			<h1>Stammdaten</h1>
+			<div style="float:left;">
+				<PersonalDataComponent person=@person/>
+			</div>
+		</section>
+
+		<section>
+			<h1>Postadressen</h1> 
+			<div style="display:flex;flex-wrap:wrap;">
+				@foreach (PostalAddress address in person.PostalAddresses)
+				{
+					<PostalAddressComponent address=@address OnAddressDelete="deleteAddress" OnAddressSave="saveAddress" />
+				}
+				<div style="margin:0.5em;">
+					<button class="btn btn-primary" @onclick="newAddress">Neue Adresse</button>
+				</div>
+			</div>
+		</section>
+	</div>
+}
+
+@code
+{
+	[Parameter]
+	public string personID {get; set;} = "";
+	public Person? person;
+	private async Task deleteAddress( PostalAddress address )
+	{
+		if( person != null )
+		{
+			person.RemovePostalAddress( address );
+		}
+		Console.WriteLine(value: "PersonDetail-TODO: persist the address-removal" );
+	}
+	private async Task newAddress()
+	{
+		if( person != null )
+		{
+			PostalAddress address = new PostalAddress();
+			person.AddPostalAddress(address);
+		}
+	}
+	private async Task saveAddress( PostalAddress address )
+	{
+		Console.WriteLine( value: "PersonDetail-TODO: persist if the address was new" );
+	}
+    protected override async Task OnInitializedAsync()
+	{
+		person = new Person(id: "0", lastName: "Lebelt", firstName: "Stefan");
+		person.DateOfBirth = new DateOnly(year: 1981, month: 1, day: 19);
+		person.AddPostalAddress(new PostalAddress().SetPostcode( "01728" ).SetTown( "Possendorf" ).SetStreet( "Südhang" ).SetStreetNumber( "18" ).Save());
+		person.AddPostalAddress(new PostalAddress().SetPostcode( "01728" ).SetTown( "Possendorf" ).SetStreet( "Südhang" ).SetStreetNumber( "19" ).Save());
+		person.AddPostalAddress(new PostalAddress().SetPostcode( "01728" ).SetTown( "Possendorf" ).SetStreet( "Südhang" ).SetStreetNumber( "20" ).Save());
+		person.AddPostalAddress(new PostalAddress().SetPostcode( "01728" ).SetTown( "Possendorf" ).SetStreet( "Südhang" ).SetStreetNumber( "21" ).Save());
+
+		person.AddPhoneNumber(phone: new Phone(countryPrefix: 49, regionPrefix: 172, number: 6004535, phoneType: Phone.PhoneType.Mobile));
+		person.AddPhoneNumber(phone: new Phone(countryPrefix: 49, regionPrefix: 35206, number: 261658, phoneType: Phone.PhoneType.Home));
+		person.AddPhoneNumber(phone: new Phone(countryPrefix: 49, regionPrefix: 351, number: 4108116, phoneType: Phone.PhoneType.Office));
+
+		Console.WriteLine( value: "PersonDetail-TODO: load the person-data from the DB instead of creating testdata" );
+	}
+
+}
+

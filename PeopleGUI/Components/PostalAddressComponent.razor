@@ -1,0 +1,58 @@
+@rendermode InteractiveServer
+@using PeopleGUI.Model
+
+<div class="card" style="margin:0.5em;">
+	<div class="card-body">
+		<div style="margin:0.5em">
+			<input @bind-value="@address.Street" placeholder="Straße" style="width:9em"/>
+			<input @bind-value="@address.StreetNumber" placeholder="Nr." style="width:3em"/>
+		</div>
+		<div style="margin:0.5em">
+			<input @bind-value="@address.Postcode" placeholder="PLZ" style="width:5em" minlength=4 maxlength=5 type="number"/>
+			<input @bind-value="@address.Town" placeholder="Ort" style="width:7em"/>
+		</div>
+		<div style="margin:0.5em">
+		@if( submitting )
+		{
+			<button class="btn btn-primary" style="color:black;background-color:orange; border-color:orange" @onclick="save">Speichern</button>
+			<button class="btn btn-primary" style="float:right; color:black;background-color:orange; border-color:orange" @onclick="() => OnAddressDelete.InvokeAsync(address)">Löschen</button>
+		}
+		else
+		{
+			@if( address.Dirty )
+			{
+				<button class="btn btn-primary" style="color:black;background-color:red; border-color:red" @onclick="save">Speichern</button>
+			}
+			else
+			{
+				<button class="btn btn-primary" @onclick="save">Speichern</button>
+			}
+			<button class="btn btn-primary" style="float:right" @onclick="() => OnAddressDelete.InvokeAsync(address)">Löschen</button>
+		}
+		</div>
+	</div>
+</div>
+
+@code
+{
+	[Parameter]
+	public required PostalAddress address {get; set;}
+
+    [Parameter]
+	public EventCallback<PostalAddress> OnAddressDelete {get; set;}
+
+	[Parameter]
+	public EventCallback<PostalAddress> OnAddressSave {get; set;}
+
+	private bool submitting = false;
+	
+	private async Task save()
+	{
+		submitting = true;
+		await Task.Delay(1000);
+		submitting = false;
+		address.Save();
+		await OnAddressSave.InvokeAsync( address );
+		Console.WriteLine( value: "PostalAddressComponent-TODO: persist the address when it was saved" );
+	}
+}
