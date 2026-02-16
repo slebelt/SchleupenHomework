@@ -39,7 +39,7 @@ else
 @code
 {
 	[Parameter]
-	public string searchTerm {get; set;} = "";
+	public string searchTerm { get; set; } = "";
 
 	private List<Person> data = [];
 
@@ -48,23 +48,23 @@ else
 	protected override async Task OnInitializedAsync()
 	{
 		string endpoint = "http://localhost:5152/";
-		if( "◕‿◕".Equals(searchTerm) )
+		if ("◕‿◕".Equals(searchTerm))
 		{
 			endpoint += "all/";
 		}
-		else if( searchTerm != null )
+		else if (searchTerm != null)
 		{
 			endpoint += "search/" + searchTerm;
 		}
-		HttpRequestMessage request = new HttpRequestMessage( HttpMethod.Get, requestUri: endpoint );
+		HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUri: endpoint);
 		HttpClient client = ClientFactory.CreateClient();
 		try
 		{
-			HttpResponseMessage response = await client.SendAsync( request );
-			if( response.IsSuccessStatusCode )
+			HttpResponseMessage response = await client.SendAsync(request);
+			if (response.IsSuccessStatusCode)
 			{
 				Stream responseStream = await response.Content.ReadAsStreamAsync();
-				data = await JsonSerializer.DeserializeAsync<List<Person>>( responseStream );
+				data = await JsonSerializer.DeserializeAsync<List<Person>>(responseStream);
 				transmissionError = false;
 			}
 			else
@@ -72,7 +72,7 @@ else
 				transmissionError = true;
 			}
 		}
-		catch( HttpRequestException )
+		catch (HttpRequestException)
 		{
 			transmissionError = true;
 		}

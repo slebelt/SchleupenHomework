@@ -31,31 +31,31 @@
 @code
 {
 	[Parameter]
-	public string personID {get; set;} = "";
+	public string personID { get; set; } = "";
 	public Person? person;
-	private async Task deleteAddress( PostalAddress address )
+	private async Task deleteAddress(PostalAddress address)
 	{
-		if( person != null )
+		if (person != null)
 		{
-			person.RemovePostalAddress( address );
+			person.RemovePostalAddress(address);
 		}
-		Console.WriteLine(value: "PersonDetail-TODO: persist the address-removal" );
+		Console.WriteLine(value: "PersonDetail-TODO: persist the address-removal");
 	}
 	private async Task newAddress()
 	{
-		if( person != null )
+		if (person != null)
 		{
 			PostalAddress address = new PostalAddress();
 			person.AddPostalAddress(address);
 		}
 	}
-	private async Task saveAddress( PostalAddress address )
+	private async Task saveAddress(PostalAddress address)
 	{
-		Console.WriteLine( value: "PersonDetail-TODO: persist if the address was new" );
+		Console.WriteLine(value: "PersonDetail-TODO: persist if the address was new");
 	}
 	protected override async Task OnInitializedAsync()
 	{
-		Console.WriteLine( value: "PersonDetail-TODO: load the person-data from the DB instead of creating testdata" );
+		Console.WriteLine(value: "PersonDetail-TODO: load the person-data from the DB instead of creating testdata");
 	}
 }
 

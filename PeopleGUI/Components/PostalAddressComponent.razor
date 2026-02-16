@@ -36,23 +36,23 @@
 @code
 {
 	[Parameter]
-	public required PostalAddress address {get; set;}
+	public required PostalAddress address { get; set; }
 
 	[Parameter]
-	public EventCallback<PostalAddress> OnAddressDelete {get; set;}
+	public EventCallback<PostalAddress> OnAddressDelete { get; set; }
 
 	[Parameter]
-	public EventCallback<PostalAddress> OnAddressSave {get; set;}
+	public EventCallback<PostalAddress> OnAddressSave { get; set; }
 
 	private bool submitting = false;
-	
+
 	private async Task save()
 	{
 		submitting = true;
 		await Task.Delay(1000);
 		submitting = false;
 		address.Save();
-		await OnAddressSave.InvokeAsync( address );
-		Console.WriteLine( value: "PostalAddressComponent-TODO: persist the address when it was saved" );
+		await OnAddressSave.InvokeAsync(address);
+		Console.WriteLine(value: "PostalAddressComponent-TODO: persist the address when it was saved");
 	}
 }

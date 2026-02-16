@@ -59,18 +59,18 @@
 @code
 {
 	[Parameter]
-	public required Person person {get; set;}
+	public required Person person { get; set; }
 
 	[Parameter]
-	public required List<PostalAddress> postalAddresses {get; set;}
+	public required List<PostalAddress> postalAddresses { get; set; }
 
 	[Parameter]
-	public required List<Phone> phoneNumbers {get; set;}
+	public required List<Phone> phoneNumbers { get; set; }
 	private bool submitted = false;
 
 	private async Task submit()
 	{
-		submitted = true;		
+		submitted = true;
 		await Task.Delay(1000);
 		submitted = false;
 	}
