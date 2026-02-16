@@ -6,13 +6,14 @@ var app = builder.Build();
 
 app.MapGet("/person/{id}", Results<Ok<Person>, NotFound> (int id) =>
 {
-	Person person = null;
+	Person person = new Person(1, "Stefan", "Lebelt", DateTime.Parse("1981-01-19"), [], []);
 	//TODO implement search
 	return person is null ? TypedResults.NotFound() : TypedResults.Ok(person);
 });
-app.MapGet("/person/search{term}", Results<Ok<List<Person>>, NotFound> (string term) =>
+app.MapGet("/person/search/{term}", Results<Ok<List<Person>>, NotFound> (string term) =>
 {
 	List<Person> Result = [];
+	Result.Add(new Person(1, "Stefan", "Lebelt", DateTime.Parse("1981-01-19"), [], []));
 	//TODO implement search
 	return Result.Count == 0 ? TypedResults.NotFound() : TypedResults.Ok(Result);
 });

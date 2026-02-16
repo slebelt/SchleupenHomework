@@ -1,0 +1,5 @@
+GET http://localhost:5152/person/search/bla
+
+GET http://localhost:5152/person/
+
+GET http://localhost:5152/person/2
