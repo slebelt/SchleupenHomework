@@ -14,22 +14,22 @@ public class Phone()
 
 	[JsonPropertyName("phoneType")]
 	public string PhoneType { get; set; } = "";
-	public Phone SetCountyPrefix( int countryPrefix )
+	public Phone SetCountyPrefix(int countryPrefix)
 	{
 		CountryPrefix = countryPrefix;
 		return this;
 	}
-	public Phone SetRegionPrefix( int regionPrefix )
+	public Phone SetRegionPrefix(int regionPrefix)
 	{
 		RegionPrefix = regionPrefix;
 		return this;
 	}
-	public Phone SetNumber( int number )
+	public Phone SetNumber(int number)
 	{
 		Number = number;
 		return this;
 	}
-	public Phone SetPhoneType( string phoneType )
+	public Phone SetPhoneType(string phoneType)
 	{
 		PhoneType = phoneType;
 		return this;

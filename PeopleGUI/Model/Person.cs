@@ -5,7 +5,7 @@ namespace PeopleGUI.Model;
 public class Person(string? id, string? lastName, string? firstName)
 {
 	[JsonPropertyName("id")]
-	public string? ID {get;} = id;
+	public string? ID { get; } = id;
 
 	[JsonPropertyName("firstName")]
 	public string? FirstName { get; set; } = firstName;
@@ -14,7 +14,7 @@ public class Person(string? id, string? lastName, string? firstName)
 	public string? LastName { get; set; } = lastName;
 
 	[JsonPropertyName("dateOfBirth")]
-	public DateOnly DateOfBirth { get; set ; }
+	public DateOnly DateOfBirth { get; set; }
 
 	[JsonInclude]
 	[JsonPropertyName("postalAddresses")]
@@ -23,16 +23,16 @@ public class Person(string? id, string? lastName, string? firstName)
 	[JsonInclude]
 	[JsonPropertyName("phoneNumbers")]
 	public List<Phone> PhoneNumbers = [];
-	public void AddPostalAddress( PostalAddress address )
+	public void AddPostalAddress(PostalAddress address)
 	{
 		this.PostalAddresses.Add(address);
 	}
-	public void RemovePostalAddress( PostalAddress address )
+	public void RemovePostalAddress(PostalAddress address)
 	{
 		PostalAddresses.Remove(address);
 	}
 
-	public void AddPhoneNumber( Phone phone )
+	public void AddPhoneNumber(Phone phone)
 	{
 		this.PhoneNumbers.Add(phone);
 	}

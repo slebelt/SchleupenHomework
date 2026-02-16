@@ -38,12 +38,12 @@ else
 
 @code
 {
-    [Parameter]
-    public string searchTerm {get; set;} = "";
+	[Parameter]
+	public string searchTerm {get; set;} = "";
 
-    private List<Person> data = [];
+	private List<Person> data = [];
 
-    private bool transmissionError = false;
+	private bool transmissionError = false;
 
 	protected override async Task OnInitializedAsync()
 	{

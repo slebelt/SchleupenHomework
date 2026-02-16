@@ -3,8 +3,8 @@ namespace PeopleGUI.Model;
 
 public class PostalAddress
 {
-	public bool Dirty {get; private set;} = true;
-	
+	public bool Dirty { get; private set; } = true;
+
 	private int? postcode = null;
 
 	[JsonPropertyName("postalCode")]
@@ -12,7 +12,7 @@ public class PostalAddress
 	{
 		get
 		{
-			if( postcode == null )
+			if (postcode == null)
 			{
 				return "";
 			}
@@ -20,19 +20,19 @@ public class PostalAddress
 		}
 		set
 		{
-			if( value == null || value.Length < 4 || value.Length >5 )
+			if (value == null || value.Length < 4 || value.Length > 5)
 			{
 				return;
 			}
 			try
 			{
 				postcode = Int32.Parse(value);
-				Dirty = true;	
+				Dirty = true;
 			}
-			catch( FormatException ){}
+			catch (FormatException) { }
 		}
 	}
-	
+
 	private string? town = "";
 
 	[JsonPropertyName("town")]
@@ -45,7 +45,7 @@ public class PostalAddress
 			Dirty = true;
 		}
 	}
-	
+
 	private string? street = "";
 
 	[JsonPropertyName("street")]
@@ -73,35 +73,35 @@ public class PostalAddress
 	}
 	public string GetPostcodeAsString()
 	{
-		if( Postcode == null )
+		if (Postcode == null)
 		{
 			return "";
 		}
 		return $"{Postcode:D5}";
 	}
-	public PostalAddress SetPostcode( string postcode )
+	public PostalAddress SetPostcode(string postcode)
 	{
 		Postcode = postcode;
 		return this;
 	}
-	public PostalAddress SetTown( string town )
+	public PostalAddress SetTown(string town)
 	{
 		Town = town;
 		return this;
 	}
-	public PostalAddress SetStreet( string street )
+	public PostalAddress SetStreet(string street)
 	{
 		Street = street;
 		return this;
 	}
-	public PostalAddress SetStreetNumber( string streetNumber )
+	public PostalAddress SetStreetNumber(string streetNumber)
 	{
 		StreetNumber = streetNumber;
 		return this;
 	}
 	public PostalAddress Save()
 	{
-		if( Postcode == "" && Town == "" && Street == "" && StreetNumber == "" )
+		if (Postcode == "" && Town == "" && Street == "" && StreetNumber == "")
 		{
 			return this;
 		}

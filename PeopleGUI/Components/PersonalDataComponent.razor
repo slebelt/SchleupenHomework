@@ -55,7 +55,7 @@
 @code
 {
 	[Parameter]
-	public required Person person {get; set;}
+	public required Person person { get; set; }
 
 	private bool submitting = false;
 
@@ -64,7 +64,6 @@
 		submitting = true;
 		await Task.Delay(1000);
 		submitting = false;
-		Console.WriteLine( value: "NameComponent-TODO: persist the first- and lastName when it was saved" );
+		Console.WriteLine(value: "NameComponent-TODO: persist the first- and lastName when it was saved");
 	}
-
 }
