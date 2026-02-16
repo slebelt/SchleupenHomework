@@ -1,13 +1,28 @@
-﻿namespace PeopleGUI.Model;
-public class Person(string id, string lastName, string firstName)
-{
-	public string ID {get;} = id;
-	public string FirstName { get; set; } = firstName;
-	public string LastName { get; set; } = lastName;
-	public DateOnly DateOfBirth { get; set; }
-	public List<PostalAddress> PostalAddresses = [];
-	public List<Phone> PhoneNumbers = [];
+﻿using System.Text.Json.Serialization;
 
+namespace PeopleGUI.Model;
+
+public class Person(string? id, string? lastName, string? firstName)
+{
+	[JsonPropertyName("id")]
+	public string? ID {get;} = id;
+
+	[JsonPropertyName("firstName")]
+	public string? FirstName { get; set; } = firstName;
+
+	[JsonPropertyName("lastName")]
+	public string? LastName { get; set; } = lastName;
+
+	[JsonPropertyName("dateOfBirth")]
+	public DateOnly DateOfBirth { get; set ; }
+
+	[JsonInclude]
+	[JsonPropertyName("postalAddresses")]
+	public List<PostalAddress> PostalAddresses = [];
+
+	[JsonInclude]
+	[JsonPropertyName("phoneNumbers")]
+	public List<Phone> PhoneNumbers = [];
 	public void AddPostalAddress( PostalAddress address )
 	{
 		this.PostalAddresses.Add(address);
@@ -21,5 +36,4 @@ public class Person(string id, string lastName, string firstName)
 	{
 		this.PhoneNumbers.Add(phone);
 	}
-
 }

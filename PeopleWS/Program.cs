@@ -6,14 +6,21 @@ var app = builder.Build();
 
 app.MapGet("/person/{id}", Results<Ok<Person>, NotFound> (int id) =>
 {
-	Person person = new Person(1, "Stefan", "Lebelt", DateTime.Parse("1981-01-19"), [], []);
+	Person person = new Person("1", "Stefan", "Lebelt", new DateOnly(year: 1981, month: 1, day: 19), [new PostalAddress("01728", "Bannewitz", "Südhang", "20")], []);
 	//TODO implement search
 	return person is null ? TypedResults.NotFound() : TypedResults.Ok(person);
 });
-app.MapGet("/person/search/{term}", Results<Ok<List<Person>>, NotFound> (string term) =>
+app.MapGet("/search/{term}", Results<Ok<List<Person>>, NotFound> (string term) =>
 {
 	List<Person> Result = [];
-	Result.Add(new Person(1, "Stefan", "Lebelt", DateTime.Parse("1981-01-19"), [], []));
+	Result.Add(new Person("1", "Stefanus", "Lebelt", new DateOnly(year: 1981, month: 1, day: 19), [new PostalAddress("01728", "Bannewitz", "Südhang", "20"), new PostalAddress("02708", "Großschweidnitz", "Fliederweg", "19")], [new Phone(49, 172, 6004535, "Mobile"), new Phone(49, 175, 6615393, "Mobile Work")]));
+	//TODO implement search
+	return Result.Count == 0 ? TypedResults.NotFound() : TypedResults.Ok(Result);
+});
+app.MapGet("/all", Results<Ok<List<Person>>, NotFound> () =>
+{
+	List<Person> Result = [];
+	Result.Add(new Person("1", "Stefan", "Lebelt", new DateOnly(year: 1981, month: 1, day: 19), [new PostalAddress("01728", "Bannewitz", "Südhang", "20"), new PostalAddress("02708", "Großschweidnitz", "Fliederweg", "19")], [new Phone(49, 172, 6004535, "Mobile"), new Phone(49, 175, 6615393, "Mobile Work")]));
 	//TODO implement search
 	return Result.Count == 0 ? TypedResults.NotFound() : TypedResults.Ok(Result);
 });
@@ -25,6 +32,6 @@ app.MapPost("person/", (Person person) =>
 
 app.Run();
 
-public record Phone(int CountryPrefix, int RegionPrefix, int Number, string phoneType);
+public record Phone(int CountryPrefix, int RegionPrefix, int Number, string PhoneType);
 public record PostalAddress(string PostalCode, string Town, string Street, string StreetNumber);
-public record Person(int ID, string FirstName, string LastName, DateTime DataOfBirth, List<PostalAddress> PostalAddresses, List<Phone> PhoneNumbers);
+public record Person(string ID, string FirstName, string LastName, DateOnly DateOfBirth, List<PostalAddress> PostalAddresses, List<Phone> PhoneNumbers);

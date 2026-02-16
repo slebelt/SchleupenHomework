@@ -1,20 +1,41 @@
+using System.Text.Json.Serialization;
 namespace PeopleGUI.Model;
 
-public class Phone(int countryPrefix, int regionPrefix, int number, Phone.PhoneType phoneType)
+public class Phone()
 {
-	public enum PhoneType : ushort
-	{
-		Mobile = 0,
-		Home = 1,
-		Office = 2
-	}
-	public int countryPrefix = countryPrefix;
-	public int regionPrefix = regionPrefix;
-	public int number = number;
-	public PhoneType phoneType = phoneType;
+	[JsonPropertyName("countryPrefix")]
+	public int CountryPrefix { get; set; }
 
+	[JsonPropertyName("regionPrefix")]
+	public int RegionPrefix { get; set; }
+
+	[JsonPropertyName("number")]
+	public int Number { get; set; }
+
+	[JsonPropertyName("phoneType")]
+	public string PhoneType { get; set; } = "";
+	public Phone SetCountyPrefix( int countryPrefix )
+	{
+		CountryPrefix = countryPrefix;
+		return this;
+	}
+	public Phone SetRegionPrefix( int regionPrefix )
+	{
+		RegionPrefix = regionPrefix;
+		return this;
+	}
+	public Phone SetNumber( int number )
+	{
+		Number = number;
+		return this;
+	}
+	public Phone SetPhoneType( string phoneType )
+	{
+		PhoneType = phoneType;
+		return this;
+	}
 	public string GetNumberAsString()
 	{
-		return phoneType.ToString() + ": " + countryPrefix.ToString() + " " + regionPrefix.ToString() + " " + number.ToString();
+		return PhoneType + ": " + CountryPrefix.ToString() + " " + RegionPrefix.ToString() + " " + Number.ToString();
 	}
 }

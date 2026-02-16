@@ -1,5 +1,8 @@
 ﻿@page "/{searchTerm?}"
 @rendermode InteractiveServer
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject IHttpClientFactory ClientFactory
 
 <PageTitle>Home</PageTitle>
 
@@ -13,38 +16,65 @@
 	</div>
 </div>
 
-<section>
-	@if( data.Count() > 0 )
-	{
-		<!-- h1>Personen</h1 -->
-		<div class="card-deck" style="display:flex;flex-wrap:wrap;align-items: stretch;">
-			@foreach (Person person in data)
-			{
-				<PersonDataComponent person="@person" postalAddresses="@person.PostalAddresses" phoneNumbers="@person.PhoneNumbers"/>
-			}
-		</div>
-	}	
-</section>
-
+@if( transmissionError )
+{
+	<div style="color: red">Übertragungsfehler!</div>
+}
+else
+{
+	<section>
+		@if( data.Count() > 0 )
+		{
+			<!-- h1>Personen</h1 -->
+			<div class="card-deck" style="display:flex;flex-wrap:wrap;align-items: stretch;">
+				@foreach (Person person in data)
+				{
+					<PersonDataComponent person="@person" postalAddresses="@person.PostalAddresses" phoneNumbers="@person.PhoneNumbers"/>
+				}
+			</div>
+		}
+	</section>
+}
 
 @code
 {
-	[Parameter]
-	public string searchTerm {get; set;} = "";
+    [Parameter]
+    public string searchTerm {get; set;} = "";
 
-	private List<Person> data = [];
-		
-    protected override async Task OnInitializedAsync()
+    private List<Person> data = [];
+
+    private bool transmissionError = false;
+
+	protected override async Task OnInitializedAsync()
 	{
+		string endpoint = "http://localhost:5152/";
 		if( "◕‿◕".Equals(searchTerm) )
 		{
-			data = SampleDataCreator.CreatePeople(count: 50);
-			Console.WriteLine("Home-TODO: load all person-data from the DB instead of creating testdata");
+			endpoint += "all/";
 		}
 		else if( searchTerm != null )
 		{
-			data = SampleDataCreator.CreatePeople(count: 50);
-			Console.WriteLine("Home-TODO: search for the person-data in the DB instead of creating testdata");
+			endpoint += "search/" + searchTerm;
+		}
+		HttpRequestMessage request = new HttpRequestMessage( HttpMethod.Get, requestUri: endpoint );
+		HttpClient client = ClientFactory.CreateClient();
+		try
+		{
+			HttpResponseMessage response = await client.SendAsync( request );
+			if( response.IsSuccessStatusCode )
+			{
+				Stream responseStream = await response.Content.ReadAsStreamAsync();
+				data = await JsonSerializer.DeserializeAsync<List<Person>>( responseStream );
+				transmissionError = false;
+			}
+			else
+			{
+				transmissionError = true;
+			}
+		}
+		catch( HttpRequestException )
+		{
+			transmissionError = true;
 		}
 	}
 }

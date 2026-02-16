@@ -14,13 +14,13 @@ public static class SampleDataCreator
 			if( i > 1 )
 			{
 				p.AddPostalAddress(new PostalAddress().SetPostcode("01702").SetTown("Possendorf").SetStreet("Südhang").SetStreetNumber("20").Save());
-				p.AddPhoneNumber(new Phone(49, 172, 6004535, Phone.PhoneType.Mobile));
+				p.AddPhoneNumber(new Phone().SetCountyPrefix( 49 ).SetRegionPrefix( 172 ).SetNumber( 6004535 ).SetPhoneType( "Mobile" ));
 			}
 			if( i>=3 && i%3 == 0 )
 			{
 				p.AddPostalAddress(new PostalAddress().SetPostcode("01097").SetTown("Dresden").SetStreet("Buchenstr.").SetStreetNumber("19B").Save());
-				p.AddPhoneNumber(new Phone(49, 35206, 261658, Phone.PhoneType.Home));
-				p.AddPhoneNumber(new Phone(49, 351, 4108119, Phone.PhoneType.Office));
+				p.AddPhoneNumber(new Phone().SetCountyPrefix( 49 ).SetRegionPrefix( 35206 ).SetNumber( 261658 ).SetPhoneType( "Home" ));
+				p.AddPhoneNumber(new Phone().SetCountyPrefix( 49 ).SetRegionPrefix( 351 ).SetNumber( 4108119 ).SetPhoneType( "Office" ));
 			}
 			
 			persons.Add(p);

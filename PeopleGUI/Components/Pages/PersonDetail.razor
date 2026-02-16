@@ -55,17 +55,6 @@
 	}
     protected override async Task OnInitializedAsync()
 	{
-		person = new Person(id: "0", lastName: "Lebelt", firstName: "Stefan");
-		person.DateOfBirth = new DateOnly(year: 1981, month: 1, day: 19);
-		person.AddPostalAddress(new PostalAddress().SetPostcode( "01728" ).SetTown( "Possendorf" ).SetStreet( "Südhang" ).SetStreetNumber( "18" ).Save());
-		person.AddPostalAddress(new PostalAddress().SetPostcode( "01728" ).SetTown( "Possendorf" ).SetStreet( "Südhang" ).SetStreetNumber( "19" ).Save());
-		person.AddPostalAddress(new PostalAddress().SetPostcode( "01728" ).SetTown( "Possendorf" ).SetStreet( "Südhang" ).SetStreetNumber( "20" ).Save());
-		person.AddPostalAddress(new PostalAddress().SetPostcode( "01728" ).SetTown( "Possendorf" ).SetStreet( "Südhang" ).SetStreetNumber( "21" ).Save());
-
-		person.AddPhoneNumber(phone: new Phone(countryPrefix: 49, regionPrefix: 172, number: 6004535, phoneType: Phone.PhoneType.Mobile));
-		person.AddPhoneNumber(phone: new Phone(countryPrefix: 49, regionPrefix: 35206, number: 261658, phoneType: Phone.PhoneType.Home));
-		person.AddPhoneNumber(phone: new Phone(countryPrefix: 49, regionPrefix: 351, number: 4108116, phoneType: Phone.PhoneType.Office));
-
 		Console.WriteLine( value: "PersonDetail-TODO: load the person-data from the DB instead of creating testdata" );
 	}
 

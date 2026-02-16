@@ -1,10 +1,13 @@
-﻿namespace PeopleGUI.Model;
+﻿using System.Text.Json.Serialization;
+namespace PeopleGUI.Model;
 
 public class PostalAddress
 {
 	public bool Dirty {get; private set;} = true;
 	
 	private int? postcode = null;
+
+	[JsonPropertyName("postalCode")]
 	public string? Postcode
 	{
 		get
@@ -30,8 +33,10 @@ public class PostalAddress
 		}
 	}
 	
-	private string town = "";
-	public string Town
+	private string? town = "";
+
+	[JsonPropertyName("town")]
+	public string? Town
 	{
 		get => town;
 		set
@@ -41,8 +46,10 @@ public class PostalAddress
 		}
 	}
 	
-	private string street = "";
-	public string Street
+	private string? street = "";
+
+	[JsonPropertyName("street")]
+	public string? Street
 	{
 		get => street;
 		set
@@ -52,8 +59,10 @@ public class PostalAddress
 		}
 	}
 
-	private string streetNumber = "";
-	public string StreetNumber
+	private string? streetNumber = "";
+
+	[JsonPropertyName("streetNumber")]
+	public string? StreetNumber
 	{
 		get => streetNumber;
 		set
@@ -62,7 +71,6 @@ public class PostalAddress
 			Dirty = true;
 		}
 	}
-
 	public string GetPostcodeAsString()
 	{
 		if( Postcode == null )
@@ -71,7 +79,6 @@ public class PostalAddress
 		}
 		return $"{Postcode:D5}";
 	}
-
 	public PostalAddress SetPostcode( string postcode )
 	{
 		Postcode = postcode;
@@ -92,7 +99,6 @@ public class PostalAddress
 		StreetNumber = streetNumber;
 		return this;
 	}
-	
 	public PostalAddress Save()
 	{
 		if( Postcode == "" && Town == "" && Street == "" && StreetNumber == "" )
