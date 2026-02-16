@@ -47,12 +47,16 @@ else
 
 	protected override async Task OnInitializedAsync()
 	{
+		if (searchTerm == null )
+		{
+			return;
+		}
 		string endpoint = "http://localhost:5152/";
 		if ("◕‿◕".Equals(searchTerm))
 		{
 			endpoint += "all/";
 		}
-		else if (searchTerm != null)
+		else
 		{
 			endpoint += "search/" + searchTerm;
 		}
