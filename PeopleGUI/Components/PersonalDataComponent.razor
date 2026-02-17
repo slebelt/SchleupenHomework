@@ -1,23 +1,22 @@
 @rendermode InteractiveServer
 @using PeopleGUI.Model
 
-<div class="card" style="margin:0.5em;@(person.Dirty ? "border-color:red" : "")">
+<div class="card" style="margin:0.5em;@(person.Dirty ? "border-width:medium;border-color:red" : "")">
 	<div class="card-body">
 		<div style="display:flex;flex-wrap:wrap;">
 			<div style="margin:0.5em;float:left;">
 				<span style="font-size:0.7em;">Vorname:</span>
 				<br />
-				<input @bind-value="@person.FirstName" placeholder="Vorname" style="width:5em"/>
+				<input class="form-control" @bind-value="@person.FirstName" placeholder="Vorname" style="width:5em"/>
 			</div>
 			<div style="margin:0.5em;float:left;">
 				<span style="font-size:0.7em"">Nachname:</span>
 				<br />
-				<input @bind-value="@person.LastName" placeholder="Nachname" style="width:5em"/>
+				<input class="form-control" @bind-value="@person.LastName" placeholder="Nachname" style="width:5em"/>
 			</div>
 			<div style="margin:0.5em;float:left;">
 				<span style="font-size:0.7em"">Geburtsdatum:</span>
-				<br />
-				@person.DateOfBirth.ToString(format: "yyyy-MM-dd")
+				<input id="startDate" class="form-control" type="date" @bind-value="@person.DateOfBirth"/>
 			</div>
 			@if( person.PhoneNumbers.Count >= 0 )
 			{

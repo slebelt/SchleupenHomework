@@ -48,7 +48,6 @@ else
 	private bool transmissionError = false;
 	private bool submitting = false;
 
-
 	private async Task deleteAddress(PostalAddress address)
 	{
 		if (person != null)
@@ -79,10 +78,15 @@ else
 	}
 	private async Task save()
 	{
-		submitting = true;
-		await Task.Delay(1000);
-		submitting = false;
-		Console.WriteLine(value: "PersonDetail-TODO: persist the data when it was saved");
+		if(person != null)
+		{
+			submitting = true;
+			string endpoint = "http://localhost:5152/person/";
+			await Http.PostAsJsonAsync(endpoint, person);
+			person.MarkClean();
+			await Task.Delay(500);
+			submitting = false;
+		}
 	}
 }
 

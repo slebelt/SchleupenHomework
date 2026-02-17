@@ -29,7 +29,7 @@ app.MapGet("/all", Results<Ok<List<Person>>, NotFound> () =>
 });
 app.MapPost("person/", (Person person) =>
 {
-	Console.WriteLine("POST-call to /person/");
+	Console.WriteLine("POST-call to /person/" + person.ToString());
 	//TODO implement creation or update
 	return TypedResults.Created("/person/{id}, person");
 });

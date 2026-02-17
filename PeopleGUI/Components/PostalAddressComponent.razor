@@ -1,19 +1,17 @@
 @rendermode InteractiveServer
 @using PeopleGUI.Model
 
-<div class="card" style="margin:0.5em;@(address.Dirty ? "border-color:red" : "")">
+<div class="card" style="margin:0.5em;@(address.Dirty ? "border-width:medium;border-color:red" : "")">
 	<div class="card-body">
-		<div style="margin:0.5em">
-			<input @bind-value="@address.Street" placeholder="Straße" style="width:9em"/>
-			<input @bind-value="@address.StreetNumber" placeholder="Nr." style="width:3em"/>
+		<div class="input-group mb-2" style="margin:0.5em;padding-right:0.5em;">
+			<input class="form-control" @bind-value="@address.Street" placeholder="Straße" style="width:9em"/>
+			<input class="form-control" @bind-value="@address.StreetNumber" placeholder="Nr." style="width:3em"/>
 		</div>
-		<div style="margin:0.5em">
-			<input @bind-value="@address.Postcode" placeholder="PLZ" style="width:5em" minlength=4 maxlength=5 type="number"/>
-			<input @bind-value="@address.Town" placeholder="Ort" style="width:7em"/>
+		<div class="input-group mb-2" style="margin:0.5em;padding-right:0.5em;">
+			<input class="form-control" @bind-value="@address.Postcode" placeholder="PLZ" style="width:5em" minlength=4 maxlength=5 type="number"/>
+			<input class="form-control" @bind-value="@address.Town" placeholder="Ort" style="width:7em"/>
 		</div>
-		<div style="margin:0.5em">
 		<button class="btn btn-primary" style="float:right;" @onclick="() => OnAddressDelete.InvokeAsync(address)">Entfernen</button>
-		</div>
 	</div>
 </div>
 
@@ -24,7 +22,4 @@
 
 	[Parameter]
 	public EventCallback<PostalAddress> OnAddressDelete { get; set; }
-
-	[Parameter]
-	public EventCallback<PostalAddress> OnAddressSave { get; set; }
 }

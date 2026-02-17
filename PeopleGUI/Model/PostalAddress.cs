@@ -3,7 +3,7 @@ namespace PeopleGUI.Model;
 
 public class PostalAddress
 {
-	public bool Dirty { get; private set; } = false;
+	public bool Dirty { get; set; } = false;
 
 	private int? postcode = null;
 	[JsonPropertyName("postalCodeWS")]

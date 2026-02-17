@@ -64,4 +64,13 @@ public class Person(string? id, string? lastName, string? firstName)
 	{
 		this.PhoneNumbers.Add(phone);
 	}
+
+	public void MarkClean()
+	{
+		Dirty = false;
+		foreach (PostalAddress address in PostalAddresses)
+		{
+			address.Dirty = false;
+		}
+	}
 }
