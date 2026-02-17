@@ -33,12 +33,6 @@ app.MapPost("person/", (Person person) =>
 	//TODO implement creation or update
 	return TypedResults.Created("/person/{id}, person");
 });
-app.MapPost("address/", (PostalAddress address) =>
-{
-	Console.WriteLine("POST-call to /addtess/");
-	//TODO implement creation or update
-	return TypedResults.Created("/address/{id}, address");
-});
 
 app.Run();
 
