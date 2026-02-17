@@ -6,16 +6,6 @@ public class PostalAddress
 	public bool Dirty { get; private set; } = false;
 
 	private int? postcode = null;
-	public string? Postcode
-	{
-		get => PostcodeJSON;
-		set
-		{
-			PostcodeJSON = value;
-			Dirty = true;
-		}
-	}
-
 	[JsonPropertyName("postalCode")]
 	public string? PostcodeJSON
 	{
@@ -40,8 +30,18 @@ public class PostalAddress
 			catch (FormatException) { }
 		}
 	}
+	public string? Postcode
+	{
+		get => PostcodeJSON;
+		set
+		{
+			PostcodeJSON = value;
+			Dirty = true;
+		}
+	}
 
-	private string? town = "";
+	[JsonPropertyName("town")]
+	public string? TownJSON { set; get; }
 	public string? Town
 	{
 		get => TownJSON;
@@ -52,16 +52,8 @@ public class PostalAddress
 		}
 	}
 
-	[JsonPropertyName("town")]
-	public string? TownJSON{
-		get => town;
-		set
-		{
-			town = value;
-		}
-	}
-
-	private string? street = "";
+	[JsonPropertyName("street")]
+	public string? StreetJSON { set; get; }
 	public string? Street
 	{
 		get => StreetJSON;
@@ -72,17 +64,8 @@ public class PostalAddress
 		}
 	}
 
-	[JsonPropertyName("street")]
-	public string? StreetJSON
-	{
-		get => street;
-		set
-		{
-			street = value;
-		}
-	}
-
-	private string? streetNumber = "";
+	[JsonPropertyName("streetNumber")]
+	public string? StreetNumberJSON { set; get; }
 	public string? StreetNumber
 	{
 		get => StreetNumberJSON;
@@ -93,15 +76,6 @@ public class PostalAddress
 		}
 	}
 
-	[JsonPropertyName("streetNumber")]
-	public string? StreetNumberJSON
-	{
-		get => streetNumber;
-		set
-		{
-			streetNumber = value;
-		}
-	}
 
 	//special getters and setters
 	public string GetPostcodeAsString()
