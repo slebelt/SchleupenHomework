@@ -1,7 +1,7 @@
 @rendermode InteractiveServer
 @using PeopleGUI.Model
 
-<div class="card" style="margin:0.5em;">
+<div class="card" style="margin:0.5em;@(person.Dirty ? "border-color:red" : "")">
 	<div class="card-body">
 		<div style="display:flex;flex-wrap:wrap;">
 			<div style="margin:0.5em;float:left;">

@@ -9,13 +9,40 @@ public class Person(string? id, string? lastName, string? firstName)
 	public string? ID { get; } = id;
 
 	[JsonPropertyName("firstName")]
-	public string? FirstName { get; set; } = firstName;
+	public string? FirstNameJSON { get; set; } = firstName;
+	public string? FirstName
+	{
+		get => FirstNameJSON;
+		set
+		{
+			FirstNameJSON = value;
+			Dirty = true;
+		}
+	}
 
 	[JsonPropertyName("lastName")]
-	public string? LastName { get; set; } = lastName;
+	public string? LastNameJSON { get; set; } = lastName;
+	public string? LastName
+	{
+		get => LastNameJSON;
+		set
+		{
+			LastNameJSON = value;
+			Dirty = true;
+		}
+	}
 
 	[JsonPropertyName("dateOfBirth")]
-	public DateOnly DateOfBirth { get; set; }
+	public DateOnly DateOfBirthJSON { get; set; }
+	public DateOnly DateOfBirth
+	{
+		get => DateOfBirthJSON;
+		set
+		{
+			DateOfBirthJSON = value;
+			Dirty = true;
+		}
+	}
 
 	[JsonInclude]
 	[JsonPropertyName("postalAddresses")]
