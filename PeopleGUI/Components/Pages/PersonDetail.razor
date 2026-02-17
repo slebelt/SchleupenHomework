@@ -83,31 +83,6 @@ else
 		await Task.Delay(1000);
 		submitting = false;
 		Console.WriteLine(value: "PersonDetail-TODO: persist the data when it was saved");
-
-
-		/*
-		string endpoint = "http://localhost:5152/person";
-		HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, requestUri: endpoint);
-		HttpClient client = ClientFactory.CreateClient();
-		try
-		{
-			HttpResponseMessage response = await client.SendAsync(request);
-			if (response.IsSuccessStatusCode)
-			{
-				Stream responseStream = await response.Content.ReadAsStreamAsync();
-				data = await JsonSerializer.DeserializeAsync<List<Person>>(responseStream);
-				transmissionError = false;
-			}
-			else
-			{
-				transmissionError = true;
-			}
-		}
-		catch (HttpRequestException)
-		{
-			transmissionError = true;
-		}
-		*/
 	}
 }
 
