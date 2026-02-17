@@ -7,7 +7,7 @@ var app = builder.Build();
 app.MapGet("/person/{id}", Results<Ok<Person>, NotFound> (int id) =>
 {
 	Console.WriteLine("GET-call to /person/" + id.ToString());
-	Person person = new Person("1", "Stefan", "Lebelt", new DateOnly(year: 1981, month: 1, day: 19), [new PostalAddress("01728", "Bannewitz", "Südhang", "20")], []);
+	Person person = new Person("1", "Stefan", "Lebelt", new DateOnly(year: 1981, month: 1, day: 19), [new PostalAddress("01728", "Bannewitz", "Südhang", "20")], [new Phone(49, 172, 6004535, "Mobile"), new Phone(49, 175, 6615393, "Mobile Work")]);
 	//TODO implement search
 	return person is null ? TypedResults.NotFound() : TypedResults.Ok(person);
 });

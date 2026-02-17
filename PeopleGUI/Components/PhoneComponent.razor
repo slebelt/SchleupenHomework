@@ -1,0 +1,23 @@
+@rendermode InteractiveServer
+@using PeopleGUI.Model
+
+<div class="card" style="margin-right:0.5em;margin-bottom:0.5em;@(phone.Dirty ? "border-width:medium;border-color:red" : "")">
+	<div class="card-body">
+		<div class="input-group mb-4" style="margin:0.5em;padding-right:0.5em;">
+			<input class="form-control" @bind-value="@phone.PhoneType" placeholder="Type" style="width:5em"/>
+			<input class="form-control" @bind-value="@phone.CountryPrefixStr" placeholder="Land" style="width:3em"/>
+			<input class="form-control" @bind-value="@phone.RegionPrefixStr" placeholder="Vorwahl" style="width:4em"/>
+			<input class="form-control" @bind-value="@phone.NumberStr" placeholder="Nr." style="width:7em"/>
+		</div>
+		<button class="btn btn-primary" style="float:right;" @onclick="() => OnPhoneDelete.InvokeAsync(phone)">Entfernen</button>
+	</div>
+</div>
+
+@code
+{
+	[Parameter]
+	public required Phone phone { get; set; }
+
+	[Parameter]
+	public EventCallback<Phone> OnPhoneDelete { get; set; }
+}

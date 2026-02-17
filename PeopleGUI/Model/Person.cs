@@ -59,18 +59,24 @@ public class Person(string? id, string? lastName, string? firstName)
 	{
 		PostalAddresses.Remove(address);
 	}
-
 	public void AddPhoneNumber(Phone phone)
 	{
 		this.PhoneNumbers.Add(phone);
 	}
-
+	public void RemovePhoneNumber(Phone phone)
+	{
+		PhoneNumbers.Remove(phone);
+	}
 	public void MarkClean()
 	{
 		Dirty = false;
 		foreach (PostalAddress address in PostalAddresses)
 		{
 			address.Dirty = false;
+		}
+		foreach (Phone phone in PhoneNumbers)
+		{
+			phone.Dirty = false;
 		}
 	}
 }

@@ -5,7 +5,7 @@
 @inject HttpClient Http
 
 
-<PageTitle>Adress-Liste</PageTitle>
+<PageTitle>Personendaten</PageTitle>
 <button class="btn btn-primary" style="margin-bottom:2em" onclick="history.back()">&larr;</button>
 
 @if( transmissionError )
@@ -17,28 +17,40 @@ else
 	@if ( person != null )
 	{
 		<div style="display:flex;flex-wrap:wrap;">
-			<section>
+			<section style="margin-right:0.5em;">
 				<h1>Stammdaten</h1>
 				<div style="float:left;">
 					<PersonalDataComponent person=@person/>
 				</div>
 			</section>
 
-			<section>
+			<section style="margin-right:0.5em;">
 				<h1>Postadressen</h1> 
 				<div style="display:flex;flex-wrap:wrap;">
 					@foreach (PostalAddress address in person.PostalAddresses)
 					{
 						<PostalAddressComponent address=@address OnAddressDelete="deleteAddress" />
 					}
-					<div style="margin:0.5em;">
+					<div>
 						<button class="btn btn-primary" @onclick="newAddress">Neue Adresse</button>
-						<br />
-						<button class="btn btn-primary" style="margin-top:0.5em;@(submitting ? "color:black;background-color:orange; border-color:orange" : "")" @onclick="save">Datensatz Speichern</button>
+					</div>
+				</div>
+			</section>
+
+			<section style="margin-right:0.5em;">
+				<h1>Telefonnummern</h1> 
+				<div style="display:flex;flex-wrap:wrap;">
+					@foreach (Phone phone in person.PhoneNumbers)
+					{
+						<PhoneComponent phone=@phone OnPhoneDelete="deletePhone" />
+					}
+					<div>
+						<button class="btn btn-primary" @onclick="newPhone">Neue Nummer</button>
 					</div>
 				</div>
 			</section>
 		</div>
+		<button class="btn btn-primary" style="margin-top:0.5em;@(submitting ? "color:black;background-color:orange; border-color:orange" : "")" @onclick="save">Datensatz Speichern</button>
 	}
 }
 @code
@@ -55,14 +67,26 @@ else
 		{
 			person.RemovePostalAddress(address);
 		}
-		Console.WriteLine(value: "PersonDetail-TODO: persist the address-removal");
 	}
 	private async Task newAddress()
 	{
 		if (person != null)
 		{
-			PostalAddress address = new PostalAddress();
-			person.AddPostalAddress(address);
+			person.AddPostalAddress(address: new PostalAddress());
+		}
+	}
+	private async Task deletePhone(Phone phone)
+	{
+		if (person != null)
+		{
+			person.RemovePhoneNumber(phone);
+		}
+	}
+	private async Task newPhone()
+	{
+		if (person != null)
+		{
+			person.AddPhoneNumber(phone: new Phone());
 		}
 	}
 	protected override async Task OnInitializedAsync()
