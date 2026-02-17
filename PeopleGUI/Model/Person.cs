@@ -4,6 +4,7 @@ namespace PeopleGUI.Model;
 
 public class Person(string? id, string? lastName, string? firstName)
 {
+	public bool Dirty { get; private set; } = false;
 	[JsonPropertyName("id")]
 	public string? ID { get; } = id;
 

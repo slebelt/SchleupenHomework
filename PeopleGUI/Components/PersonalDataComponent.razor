@@ -32,23 +32,6 @@
 				</div>
 			}
 		</div>
-		<div style="margin:0.5em;text-align:right;">
-		@if( submitting )
-		{
-			<button class="btn btn-primary" style="color:black;background-color:orange; border-color:orange" @onclick="save">Speichern</button>
-		}
-		else
-		{
-			@if( false )
-			{
-				<button class="btn btn-primary" style="color:black;background-color:red; border-color:red" @onclick="save">Speichern</button>
-			}
-			else
-			{
-				<button class="btn btn-primary" @onclick="save">Speichern</button>
-			}
-		}
-		</div>
 	</div>
 </div>
 
@@ -56,14 +39,4 @@
 {
 	[Parameter]
 	public required Person person { get; set; }
-
-	private bool submitting = false;
-
-	private async Task save()
-	{
-		submitting = true;
-		await Task.Delay(1000);
-		submitting = false;
-		Console.WriteLine(value: "NameComponent-TODO: persist the first- and lastName when it was saved");
-	}
 }

@@ -3,12 +3,21 @@ namespace PeopleGUI.Model;
 
 public class PostalAddress
 {
-	public bool Dirty { get; private set; } = true;
+	public bool Dirty { get; private set; } = false;
 
 	private int? postcode = null;
+	public string? Postcode
+	{
+		get => PostcodeJSON;
+		set
+		{
+			PostcodeJSON = value;
+			Dirty = true;
+		}
+	}
 
 	[JsonPropertyName("postalCode")]
-	public string? Postcode
+	public string? PostcodeJSON
 	{
 		get
 		{
@@ -27,50 +36,74 @@ public class PostalAddress
 			try
 			{
 				postcode = Int32.Parse(value);
-				Dirty = true;
 			}
 			catch (FormatException) { }
 		}
 	}
 
 	private string? town = "";
-
-	[JsonPropertyName("town")]
 	public string? Town
 	{
-		get => town;
+		get => TownJSON;
 		set
 		{
-			town = value;
+			TownJSON = value;
 			Dirty = true;
 		}
 	}
 
+	[JsonPropertyName("town")]
+	public string? TownJSON{
+		get => town;
+		set
+		{
+			town = value;
+		}
+	}
+
 	private string? street = "";
+	public string? Street
+	{
+		get => StreetJSON;
+		set
+		{
+			StreetJSON = value;
+			Dirty = true;
+		}
+	}
 
 	[JsonPropertyName("street")]
-	public string? Street
+	public string? StreetJSON
 	{
 		get => street;
 		set
 		{
 			street = value;
-			Dirty = true;
 		}
 	}
 
 	private string? streetNumber = "";
+	public string? StreetNumber
+	{
+		get => StreetNumberJSON;
+		set
+		{
+			StreetNumberJSON = value;
+			Dirty = true;
+		}
+	}
 
 	[JsonPropertyName("streetNumber")]
-	public string? StreetNumber
+	public string? StreetNumberJSON
 	{
 		get => streetNumber;
 		set
 		{
 			streetNumber = value;
-			Dirty = true;
 		}
 	}
+
+	//special getters and setters
 	public string GetPostcodeAsString()
 	{
 		if (Postcode == null)

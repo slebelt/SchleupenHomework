@@ -66,12 +66,4 @@
 
 	[Parameter]
 	public required List<Phone> phoneNumbers { get; set; }
-	private bool submitted = false;
-
-	private async Task submit()
-	{
-		submitted = true;
-		await Task.Delay(1000);
-		submitted = false;
-	}
 }

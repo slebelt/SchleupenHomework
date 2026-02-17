@@ -1,38 +1,54 @@
 @page "/person/{personID}"
 @rendermode InteractiveServer
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject IHttpClientFactory ClientFactory
+
 
 <PageTitle>Adress-Liste</PageTitle>
 
-@if ( person != null )
+@if( transmissionError )
 {
-	<div style="display:flex;flex-wrap:wrap;">
-		<section>
-			<h1>Stammdaten</h1>
-			<div style="float:left;">
-				<PersonalDataComponent person=@person/>
-			</div>
-		</section>
-
-		<section>
-			<h1>Postadressen</h1> 
-			<div style="display:flex;flex-wrap:wrap;">
-				@foreach (PostalAddress address in person.PostalAddresses)
-				{
-					<PostalAddressComponent address=@address OnAddressDelete="deleteAddress" OnAddressSave="saveAddress" />
-				}
-				<div style="margin:0.5em;">
-					<button class="btn btn-primary" @onclick="newAddress">Neue Adresse</button>
-				</div>
-			</div>
-		</section>
-	</div>
+	<div style="color: red">Übertragungsfehler!</div>
 }
+else
+{
+	@if ( person != null )
+	{
+		<div style="display:flex;flex-wrap:wrap;">
+			<section>
+				<h1>Stammdaten</h1>
+				<div style="float:left;">
+					<PersonalDataComponent person=@person/>
+				</div>
+			</section>
 
+			<section>
+				<h1>Postadressen</h1> 
+				<div style="display:flex;flex-wrap:wrap;">
+					@foreach (PostalAddress address in person.PostalAddresses)
+					{
+						<PostalAddressComponent address=@address OnAddressDelete="deleteAddress" />
+					}
+					<div style="margin:0.5em;">
+						<button class="btn btn-primary" @onclick="newAddress">Neue Adresse</button>
+						<br />
+						<button class="btn btn-primary" style="margin-top:0.5em;@(submitting ? "color:black;background-color:orange; border-color:orange" : "")" @onclick="save">Datensatz Speichern</button>
+					</div>
+				</div>
+			</section>
+		</div>
+	}
+}
 @code
 {
 	[Parameter]
 	public string personID { get; set; } = "";
 	public Person? person;
+	private bool transmissionError = false;
+	private bool submitting = false;
+
+
 	private async Task deleteAddress(PostalAddress address)
 	{
 		if (person != null)
@@ -49,13 +65,36 @@
 			person.AddPostalAddress(address);
 		}
 	}
-	private async Task saveAddress(PostalAddress address)
-	{
-		Console.WriteLine(value: "PersonDetail-TODO: persist if the address was new");
-	}
 	protected override async Task OnInitializedAsync()
 	{
-		Console.WriteLine(value: "PersonDetail-TODO: load the person-data from the DB instead of creating testdata");
+		string endpoint = "http://localhost:5152/person/" + personID;
+		HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUri: endpoint);
+		HttpClient client = ClientFactory.CreateClient();
+		try
+		{
+			HttpResponseMessage response = await client.SendAsync(request);
+			if (response.IsSuccessStatusCode)
+			{
+				Stream responseStream = await response.Content.ReadAsStreamAsync();
+				person = await JsonSerializer.DeserializeAsync<Person>(responseStream);
+				transmissionError = false;
+			}
+			else
+			{
+				transmissionError = true;
+			}
+		}
+		catch (HttpRequestException)
+		{
+			transmissionError = true;
+		}
+	}
+	private async Task save()
+	{
+		submitting = true;
+		await Task.Delay(1000);
+		submitting = false;
+		Console.WriteLine(value: "PersonDetail-TODO: persist the data when it was saved");
 	}
 }
 
