@@ -3,16 +3,16 @@ namespace PeopleGUI.Model;
 
 public class Phone()
 {
-	[JsonPropertyName("countryPrefix")]
+	[JsonPropertyName("countryPrefixWS")]
 	public int CountryPrefix { get; set; }
 
-	[JsonPropertyName("regionPrefix")]
+	[JsonPropertyName("regionPrefixWS")]
 	public int RegionPrefix { get; set; }
 
-	[JsonPropertyName("number")]
+	[JsonPropertyName("numberWS")]
 	public int Number { get; set; }
 
-	[JsonPropertyName("phoneType")]
+	[JsonPropertyName("phoneTypeWS")]
 	public string PhoneType { get; set; } = "";
 	public Phone SetCountyPrefix(int countryPrefix)
 	{

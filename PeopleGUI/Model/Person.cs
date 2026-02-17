@@ -8,7 +8,7 @@ public class Person(string? id, string? lastName, string? firstName)
 	[JsonPropertyName("id")]
 	public string? ID { get; } = id;
 
-	[JsonPropertyName("firstName")]
+	[JsonPropertyName("firstNameWS")]
 	public string? FirstNameJSON { get; set; } = firstName;
 	public string? FirstName
 	{
@@ -20,7 +20,7 @@ public class Person(string? id, string? lastName, string? firstName)
 		}
 	}
 
-	[JsonPropertyName("lastName")]
+	[JsonPropertyName("lastNameWS")]
 	public string? LastNameJSON { get; set; } = lastName;
 	public string? LastName
 	{
@@ -32,7 +32,7 @@ public class Person(string? id, string? lastName, string? firstName)
 		}
 	}
 
-	[JsonPropertyName("dateOfBirth")]
+	[JsonPropertyName("dateOfBirthWS")]
 	public DateOnly DateOfBirthJSON { get; set; }
 	public DateOnly DateOfBirth
 	{
@@ -45,11 +45,11 @@ public class Person(string? id, string? lastName, string? firstName)
 	}
 
 	[JsonInclude]
-	[JsonPropertyName("postalAddresses")]
+	[JsonPropertyName("postalAddressesWS")]
 	public List<PostalAddress> PostalAddresses = [];
 
 	[JsonInclude]
-	[JsonPropertyName("phoneNumbers")]
+	[JsonPropertyName("phoneNumbersWS")]
 	public List<Phone> PhoneNumbers = [];
 	public void AddPostalAddress(PostalAddress address)
 	{

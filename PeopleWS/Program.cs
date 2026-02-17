@@ -36,6 +36,6 @@ app.MapPost("person/", (Person person) =>
 
 app.Run();
 
-public record Phone(int CountryPrefix, int RegionPrefix, int Number, string PhoneType);
-public record PostalAddress(string PostalCode, string Town, string Street, string StreetNumber);
-public record Person(string ID, string FirstName, string LastName, DateOnly DateOfBirth, List<PostalAddress> PostalAddresses, List<Phone> PhoneNumbers);
+public record Phone(int CountryPrefixWS, int RegionPrefixWS, int NumberWS, string PhoneTypeWS);
+public record PostalAddress(string PostalCodeWS, string TownWS, string StreetWS, string StreetNumberWS);
+public record Person(string ID, string FirstNameWS, string LastNameWS, DateOnly DateOfBirthWS, List<PostalAddress> PostalAddressesWS, List<Phone> PhoneNumbersWS);

@@ -6,7 +6,7 @@ public class PostalAddress
 	public bool Dirty { get; private set; } = false;
 
 	private int? postcode = null;
-	[JsonPropertyName("postalCode")]
+	[JsonPropertyName("postalCodeWS")]
 	public string? PostcodeJSON
 	{
 		get
@@ -40,7 +40,7 @@ public class PostalAddress
 		}
 	}
 
-	[JsonPropertyName("town")]
+	[JsonPropertyName("townWS")]
 	public string? TownJSON { set; get; }
 	public string? Town
 	{
@@ -52,7 +52,7 @@ public class PostalAddress
 		}
 	}
 
-	[JsonPropertyName("street")]
+	[JsonPropertyName("streetWS")]
 	public string? StreetJSON { set; get; }
 	public string? Street
 	{
@@ -64,7 +64,7 @@ public class PostalAddress
 		}
 	}
 
-	[JsonPropertyName("streetNumber")]
+	[JsonPropertyName("streetNumberWS")]
 	public string? StreetNumberJSON { set; get; }
 	public string? StreetNumber
 	{
