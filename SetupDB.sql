@@ -1,4 +1,4 @@
-DROP DATABASE SchleupenHomework;
+DROP DATABASE IF EXISTS SchleupenHomework;
 CREATE DATABASE SchleupenHomework CHARACTER SET utf8;
 
 USE SchleupenHomework;
@@ -51,6 +51,7 @@ CREATE VIEW View AS
 	SELECT
 		p.FirstName,
 		p.LastName,
+		p.DateOfBirth,
 		COALESCE(addr.Addresses, '-') as Addresses,
 		COALESCE(tel.Numbers, '-') as PhoneNumbers
 	FROM Person p
