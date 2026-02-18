@@ -77,7 +77,7 @@ public class Phone()
 	}
 	public string GetNumberAsString()
 	{
-		return PhoneType + ": " + CountryPrefix.ToString() + " " + RegionPrefix.ToString() + " " + Number.ToString();
+		return PhoneType + ": +" + CountryPrefix.ToString() + " " + RegionPrefix.ToString() + " " + Number.ToString();
 	}
 
 

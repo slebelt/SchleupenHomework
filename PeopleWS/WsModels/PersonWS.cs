@@ -10,6 +10,7 @@ public record PersonWS(int ID, string? FirstNameWS, string? LastNameWS, DateOnly
 		List<PostalAddressWS> postalAddresses = [];
 		foreach( Address address in person.Addresses )
 		{
+			Console.WriteLine(address.Street);
 			postalAddresses.Add(PostalAddressWS.FromDbModel(address));
 		}
 		List<PhoneWS> phones = [];
@@ -18,8 +19,7 @@ public record PersonWS(int ID, string? FirstNameWS, string? LastNameWS, DateOnly
 			phones.Add(PhoneWS.FromDbModel(phone));
 		}
 #pragma warning disable CS8629 // Nullable value type may be null.
-		return new PersonWS(person.PersonId, person.FirstName, person.LastName, null, postalAddresses, phones);
-		//person.DateOfBirth == null ? null : DateOnly.FromDateTime((DateTime)person.DateOfBirth)
+		return new PersonWS(person.PersonId, person.FirstName, person.LastName, person.DateOfBirth == null ? null : DateOnly.FromDateTime((DateTime)person.DateOfBirth), postalAddresses, phones);
 #pragma warning restore CS8629 // Nullable value type may be null.
 	}
 }

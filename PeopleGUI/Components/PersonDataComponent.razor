@@ -4,10 +4,12 @@
 <div class="card" style="margin:0.5em;padding:1em;width:18em;">
 	<h5 class="card-title">@person.LastName @person.FirstName</h5>
 	<div class="card-body">
-	<span style="font-size:0.7em"">Geburtsdatum:</span>
-	<br />
-	@person.DateOfBirth
-
+	@if (person.DateOfBirth != null)
+	{
+		<span style="font-size:0.7em"">Geburtsdatum:</span>
+		<br />
+		@person.DateOfBirth
+	}
 	@if ( postalAddresses.Count > 0 )
 	{
 		<hr />
@@ -29,7 +31,6 @@
 			</div>
 		}
 	}
-	
 	@if ( phoneNumbers.Count > 0 )
 	{
 		<hr />

@@ -33,8 +33,8 @@ public class Person(int? id, string? lastName, string? firstName)
 	}
 
 	[JsonPropertyName("dateOfBirthWS")]
-	public DateOnly DateOfBirthJSON { get; set; }
-	public DateOnly DateOfBirth
+	public DateOnly? DateOfBirthJSON { get; set; }
+	public DateOnly? DateOfBirth
 	{
 		get => DateOfBirthJSON;
 		set
