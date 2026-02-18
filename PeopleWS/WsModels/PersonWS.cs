@@ -10,7 +10,6 @@ public record PersonWS(int ID, string? FirstNameWS, string? LastNameWS, DateOnly
 		List<PostalAddressWS> postalAddresses = [];
 		foreach( Address address in person.Addresses )
 		{
-			Console.WriteLine(address.Street);
 			postalAddresses.Add(PostalAddressWS.FromDbModel(address));
 		}
 		List<PhoneWS> phones = [];
