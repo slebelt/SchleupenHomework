@@ -2,11 +2,11 @@
 
 namespace PeopleGUI.Model;
 
-public class Person(string? id, string? lastName, string? firstName)
+public class Person(int? id, string? lastName, string? firstName)
 {
 	public bool Dirty { get; private set; } = false;
 	[JsonPropertyName("id")]
-	public string? ID { get; } = id;
+	public int? ID { get; } = id;
 
 	[JsonPropertyName("firstNameWS")]
 	public string? FirstNameJSON { get; set; } = firstName;
