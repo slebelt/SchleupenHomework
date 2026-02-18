@@ -99,6 +99,8 @@ INSERT INTO Person (LastName, FirstName, DateOfBirth) values('McFadden', 'Gates'
 INSERT INTO Person (LastName, FirstName, DateOfBirth) values('Barrett', 'Majel', '1932-02-23');
 INSERT INTO Person (LastName, FirstName, DateOfBirth) values('Wheeton', 'Wil', '1972-07-29');
 INSERT INTO Person (LastName, FirstName, DateOfBirth) values('Meaney', 'Colm', '1953-05-30');
+INSERT INTO Person (LastName, FirstName) values('Lebelt', 'Nicola');
+INSERT INTO Person (LastName, FirstName) values('Lebelt', 'Belana');
 
 INSERT INTO Address (Street, StreetNumber, PostalCode, Town) values ('Südhang', '20', '1728', 'Possendorf');
 INSERT INTO Address (Street, StreetNumber, PostalCode, Town) values ('Buchenstraße', '16 B', '1097', 'Dresden');
@@ -114,6 +116,8 @@ INSERT INTO Phone (PhoneType, CountryPrefix, TownPrefix, Number) values ('2del',
 
 INSERT INTO PersonAddressRelation (PersonID, AddressID) values ('1', '1'); /*Stefan Lebelt*/
 INSERT INTO PersonAddressRelation (PersonID, AddressID) values ('1', '2'); /*Stefan Lebelt*/
+INSERT INTO PersonAddressRelation (PersonID, AddressID) values ('16', '1'); /*Nicola Lebelt*/
+INSERT INTO PersonAddressRelation (PersonID, AddressID) values ('17', '1'); /*Belana Lebelt*/
 INSERT INTO PersonAddressRelation (PersonID, AddressID) values ('2', '3'); /*Gene Roddenberry*/
 INSERT INTO PersonAddressRelation (PersonID, AddressID) values ('3', '4'); /*Rick Berman*/
 INSERT INTO PersonAddressRelation (PersonID, AddressID) values ('4', '5'); /*Michael Piller*/
