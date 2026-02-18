@@ -14,4 +14,6 @@ public partial class Address
     public int? PostalCode { get; set; }
 
     public string? Town { get; set; }
+
+    public virtual ICollection<Person> People { get; set; } = new List<Person>();
 }

@@ -20,10 +20,6 @@ public partial class SchleupenHomeworkContext : DbContext
 
     public virtual DbSet<Person> People { get; set; }
 
-    public virtual DbSet<PersonAddressRelation> PersonAddressRelations { get; set; }
-
-    public virtual DbSet<PersonPhoneRelation> PersonPhoneRelations { get; set; }
-
     public virtual DbSet<Phone> Phones { get; set; }
 
     public virtual DbSet<View> Views { get; set; }
@@ -56,54 +52,46 @@ public partial class SchleupenHomeworkContext : DbContext
             entity.Property(e => e.DateOfBirth).HasColumnType("date");
             entity.Property(e => e.FirstName).HasMaxLength(255);
             entity.Property(e => e.LastName).HasMaxLength(255);
-        });
 
-        modelBuilder.Entity<PersonAddressRelation>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("PersonAddressRelation");
+            entity.HasMany(d => d.Addresses).WithMany(p => p.People)
+                .UsingEntity<Dictionary<string, object>>(
+                    "PersonAddressRelation",
+                    r => r.HasOne<Address>().WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("PersonAddressAddress"),
+                    l => l.HasOne<Person>().WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("PersonAddressPerson"),
+                    j =>
+                    {
+                        j.HasKey("PersonId", "AddressId").HasName("PRIMARY");
+                        j.ToTable("PersonAddressRelation");
+                        j.HasIndex(new[] { "AddressId" }, "PersonAddressAddress");
+                        j.IndexerProperty<int>("PersonId").HasColumnName("PersonID");
+                        j.IndexerProperty<int>("AddressId").HasColumnName("AddressID");
+                    });
 
-            entity.HasIndex(e => e.AddressId, "PersonAddressAddress");
-
-            entity.HasIndex(e => new { e.PersonId, e.AddressId }, "PersonAddressUnique").IsUnique();
-
-            entity.Property(e => e.AddressId).HasColumnName("AddressID");
-            entity.Property(e => e.PersonId).HasColumnName("PersonID");
-
-            entity.HasOne(d => d.Address).WithMany()
-                .HasForeignKey(d => d.AddressId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("PersonAddressAddress");
-
-            entity.HasOne(d => d.Person).WithMany()
-                .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("PersonAddressPerson");
-        });
-
-        modelBuilder.Entity<PersonPhoneRelation>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("PersonPhoneRelation");
-
-            entity.HasIndex(e => e.PhoneId, "PersonPhonePhone");
-
-            entity.HasIndex(e => new { e.PersonId, e.PhoneId }, "PersonPhoneUnique").IsUnique();
-
-            entity.Property(e => e.PersonId).HasColumnName("PersonID");
-            entity.Property(e => e.PhoneId).HasColumnName("PhoneID");
-
-            entity.HasOne(d => d.Person).WithMany()
-                .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("PersonPhonePerson");
-
-            entity.HasOne(d => d.Phone).WithMany()
-                .HasForeignKey(d => d.PhoneId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("PersonPhonePhone");
+            entity.HasMany(d => d.Phones).WithMany(p => p.People)
+                .UsingEntity<Dictionary<string, object>>(
+                    "PersonPhoneRelation",
+                    r => r.HasOne<Phone>().WithMany()
+                        .HasForeignKey("PhoneId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("PersonPhonePhone"),
+                    l => l.HasOne<Person>().WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("PersonPhonePerson"),
+                    j =>
+                    {
+                        j.HasKey("PersonId", "PhoneId").HasName("PRIMARY");
+                        j.ToTable("PersonPhoneRelation");
+                        j.HasIndex(new[] { "PhoneId" }, "PersonPhonePhone");
+                        j.IndexerProperty<int>("PersonId").HasColumnName("PersonID");
+                        j.IndexerProperty<int>("PhoneId").HasColumnName("PhoneID");
+                    });
         });
 
         modelBuilder.Entity<Phone>(entity =>

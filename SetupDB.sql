@@ -35,7 +35,7 @@ CREATE TABLE PersonAddressRelation (
 	AddressID INT NOT NULL,
 	CONSTRAINT PersonAddressPerson FOREIGN KEY(PersonID) REFERENCES Person(PersonID) /*ON DELETE CASCADE - would be done like this in the real world, but is explicitely not wanted by the spec*/,
 	CONSTRAINT PersonAddressAddress FOREIGN KEY(AddressID) REFERENCES Address(AddressID) /*ON DELETE CASCADE*/,
-	CONSTRAINT PersonAddressUnique UNIQUE(PersonID, AddressID)
+	CONSTRAINT PersonAddressPK PRIMARY KEY(PersonID,AddressID)
 );
 
 CREATE TABLE PersonPhoneRelation (
@@ -43,7 +43,7 @@ CREATE TABLE PersonPhoneRelation (
 	PhoneID INT NOT NULL,
 	CONSTRAINT PersonPhonePerson FOREIGN KEY(PersonID) REFERENCES Person(PersonID) /*ON DELETE CASCADE*/,
 	CONSTRAINT PersonPhonePhone FOREIGN KEY(PhoneID) REFERENCES Phone(PhoneID) /*ON DELETE CASCADE*/,
-	CONSTRAINT PersonPhoneUnique UNIQUE(PersonID, PhoneID)
+	CONSTRAINT PersonPhonePK PRIMARY KEY(PersonID, PhoneID)
 );
 
 /* ------------------------------------------------------------------ View*/

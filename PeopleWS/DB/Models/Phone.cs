@@ -14,4 +14,6 @@ public partial class Phone
     public int? TownPrefix { get; set; }
 
     public int? Number { get; set; }
+
+    public virtual ICollection<Person> People { get; set; } = new List<Person>();
 }
