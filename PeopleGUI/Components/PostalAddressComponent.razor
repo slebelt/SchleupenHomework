@@ -1,7 +1,7 @@
 @rendermode InteractiveServer
 @using PeopleGUI.Model
 
-<div class="card" style="margin-right:0.5em;margin-bottom:0.5em;@(address.Dirty ? "border-width:medium;border-color:red" : "")">
+<div class="card" style="margin-right:0.5em;margin-bottom:0.5em;@(address.Dirty ? "border-width:medium;border-color:red" : "");width:25em;">
 	<div class="card-body">
 		<div class="input-group mb-2" style="margin:0.5em;padding-right:0.5em;">
 			<input class="form-control" @bind-value="@address.Street" placeholder="Straße" style="width:15em"/>

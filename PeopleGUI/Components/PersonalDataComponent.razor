@@ -1,13 +1,17 @@
 @rendermode InteractiveServer
 @using PeopleGUI.Model
 
-<div class="card" style="margin-bottom:0.5em;@(person.Dirty ? "border-width:medium;border-color:red" : "")">
+<div class="card" style="margin-bottom:0.5em;@(person.Dirty ? "border-width:medium;border-color:red" : "");width:25em;">
 	<div class="card-body">
 		<div style="display:flex;flex-wrap:wrap;">
-			<div class="input-group mb-3" style="margin:0.5em;padding-right:0.5em;">
+			<div class="input-group mb-1" style="margin:0.5em;padding-right:0.5em;">
 				<input class="form-control" @bind-value="@person.FirstName" placeholder="Vorname" style="width:5em"/>
+			</div>
+			<div class="input-group mb-1" style="margin:0.5em;padding-right:0.5em;">
 				<input class="form-control" @bind-value="@person.LastName" placeholder="Nachname" style="width:5em"/>
-				<input id="startDate" class="form-control" type="date" @bind-value="@person.DateOfBirth" style="width:9em"/>
+			</div>
+			<div class="input-group mb-1" style="margin:0.5em;padding-right:0.5em;">
+				<input class="form-control" type="date" @bind-value="@person.DateOfBirth" style="width:6em"/>
 			</div>
 		</div>
 	</div>
