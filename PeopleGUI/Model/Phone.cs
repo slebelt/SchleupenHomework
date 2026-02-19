@@ -80,7 +80,7 @@ public class Phone()
 	}
 	public string GetNumberAsString()
 	{
-		return PhoneType + ": +" + CountryPrefix.ToString() + " " + RegionPrefix.ToString() + " " + Number.ToString();
+		return "+" + CountryPrefix.ToString() + " " + RegionPrefix.ToString() + " " + Number.ToString();
 	}
 
 

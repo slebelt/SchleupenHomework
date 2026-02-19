@@ -43,12 +43,15 @@
 			<span style="font-size:0.7em"">Telefonnummer:</span>
 		}
 		<br />		
+		<div>
+			<dl style="display:grid;">
 		@foreach (Phone phone in phoneNumbers)
 		{
-			<div>
-				@phone.GetNumberAsString()
-			</div>
+			<dt style="grid-column-start:1;font-weight:normal;">@phone.PhoneType:</dt>
+			<dd style="grid-column-start:2">@phone.GetNumberAsString()</dd>
 		}
+			</dl>
+		</div>
 	}
 	<br />
 	<div style="text-align:right;">
