@@ -5,6 +5,9 @@ public class Phone()
 {
 	public bool Dirty { get; set; } = false;
 
+	[JsonPropertyName("id")]
+	public int? ID { get; set; }
+
 	[JsonPropertyName("countryPrefixWS")]
 	public int CountryPrefixJSON { get; set; }
 	public int CountryPrefix

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
 namespace PeopleWS.DB.Models;
-
 public partial class Address
 {
-    public int AddressId { get; set; }
+    public int? AddressId { get; set; }
 
     public string? Street { get; set; }
 

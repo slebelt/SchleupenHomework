@@ -5,6 +5,8 @@ public class PostalAddress
 {
 	public bool Dirty { get; set; } = false;
 
+	[JsonPropertyName("id")]
+	public int? ID { get; set; }
 	private int? postcode = null;
 	[JsonPropertyName("postalCodeWS")]
 	public string? PostcodeJSON

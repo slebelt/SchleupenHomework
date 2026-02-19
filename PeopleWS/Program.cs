@@ -45,7 +45,18 @@ app.MapGet("/all", Results<Ok<List<PersonWS>>, NotFound> () =>
 app.MapPost("person/", (PersonWS person) =>
 {
 	Console.WriteLine("POST-call to /person/" + person.ToString());
-	//TODO implement creation or update
+	SchleupenHomeworkContext context = new();
+	Person? existingPerson = context.People.Include(person => person.Addresses).Include(person => person.Phones).Where(p => p.PersonId == person.ID).FirstOrDefault();
+	if(existingPerson == null)
+	{
+		context.Add(person.ToDbModel);
+	}
+	else
+	{
+		person.UpdateDbModel(existingPerson);
+	}
+
+	context.SaveChanges();
 	return TypedResults.Created("/person/{id}, person");
 });
 
