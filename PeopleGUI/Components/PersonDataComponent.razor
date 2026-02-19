@@ -8,7 +8,7 @@
 	{
 		<span style="font-size:0.7em"">Geburtsdatum:</span>
 		<br />
-		@person.DateOfBirth
+		@(person.DateOfBirth == null ? "" : ((DateOnly)person.DateOfBirth).ToString("yyyy-MM-dd"))
 	}
 	@if ( postalAddresses.Count > 0 )
 	{
