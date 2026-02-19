@@ -1,4 +1,4 @@
-﻿@page "/{searchTerm?}"
+﻿@page "/{searchTerm?}/{sortBy?}/{ascDesc?}"
 @rendermode InteractiveServer
 @using System.Net.Http.Json
 @using System.Net.Http
@@ -7,12 +7,24 @@
 <PageTitle>Home</PageTitle>
 
 <div style="margin-bottom:2ex;margin:0.5em">
-	<a href="/◕‿◕" style="font-size:xx-small;">Alle Daten laden!</a>
-	<div class="input-group">
+	<a href="/◕‿◕/last/asc" style="font-size:xx-small;">Alle Daten laden!</a>
+	<div class="input-group mp-2">
 		<input id="searchfield" @bind="searchTerm" type="text" class="form-control" placeholder="Suche nach Namen ...">
 		<span class="input-group-btn">
-			<button id="searchbutton" class="btn btn-primary" type="button" onclick="location.href='/@searchTerm'">Suche!</button>
+			<button id="searchbutton" class="btn btn-primary" type="button" onclick="location.href='/@searchTerm/@sortBy/@ascDesc'">Suche!</button>
 		</span>
+	</div>
+	<div class="input-group input-group-sm mp-3" style="margin-top:1ex">
+		<span class="input-group-text form-select-xs" id="basic-addon1">Sortierung</span>
+		<select class="form-select form-select-sm" @bind="sortBy">
+			<option selected value="last">Nachname</option>
+			<option value="first">Vorname</option>
+			<option value="birth">Geburtsdatum</option>
+		</select>
+		<select class="form-select form-select-sm" @bind="ascDesc">
+			<option selected value="asc">Aufsteigend</option>
+			<option value="desc">Absteigend</option>
+		</select>
 	</div>
 </div>
 
@@ -41,24 +53,38 @@ else
 	[Parameter]
 	public string searchTerm { get; set; } = "";
 
+	[Parameter]
+	public string sortBy { get; set; } = "last";
+
+	[Parameter]
+	public string ascDesc { get; set; } = "asc";
+
 	private List<Person> data = [];
 
 	private bool transmissionError = false;
 
 	protected override async Task OnInitializedAsync()
 	{
+		if (string.IsNullOrEmpty(sortBy))
+		{
+			sortBy = "last";
+		}
+		if (string.IsNullOrEmpty(ascDesc))
+		{
+			ascDesc = "asc";
+		}
 		if (searchTerm == null)
 		{
 			return;
 		}
-		string endpoint = "http://localhost:5152/";
-		if ("◕‿◕".Equals(searchTerm))
+		string endpoint = "http://localhost:5152/search/" + searchTerm;
+		if (!string.IsNullOrEmpty(sortBy))
 		{
-			endpoint += "all/";
-		}
-		else
-		{
-			endpoint += "search/" + searchTerm;
+			endpoint += "/" + sortBy;
+			if (!string.IsNullOrEmpty(ascDesc))
+			{
+				endpoint += "/" + ascDesc;
+			}
 		}
 		try
 		{

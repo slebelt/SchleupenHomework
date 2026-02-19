@@ -1,6 +1,7 @@
 
 using System.Runtime.InteropServices.Marshalling;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using PeopleWS.DB.Models;
 using PeopleWS.DB;
 using PeopleWS.WsModels;
@@ -22,21 +23,49 @@ app.MapGet("/person/{id}", async Task<Results<Ok<PersonWS>, NotFound>> (int id) 
 		return TypedResults.Ok(PersonWS.FromDbModel(person));
 	}
 });
-app.MapGet("/search/{term}", Results<Ok<List<PersonWS>>, NotFound> (string term) =>
+app.MapGet("/search/{term}/{sortBy?}/{ascDesc?}", Results<Ok<List<PersonWS>>, NotFound> (string term, string? sortBy, string? ascDesc) =>
 {
-	Console.WriteLine("GET-call to /search/" + term.ToString());
+	Console.WriteLine("GET-call to /search/" + term.ToString() + "/" + sortBy + "/" + ascDesc);
 	List<PersonWS> Result = [];
-	foreach (Person person in new SchleupenHomeworkContext().People.Include(person => person.Addresses).Include(person => person.Phones).Where(p => p.FirstName == term || p.LastName == term))
+	IQueryable<Person> query = new SchleupenHomeworkContext().People.Include(person => person.Addresses).Include(person => person.Phones);
+	if( !"◕‿◕".Equals(term))
 	{
-		Result.Add(PersonWS.FromDbModel(person));
+		query = query.Where(p => p.FirstName == term || p.LastName == term);
 	}
-	return Result.Count == 0 ? TypedResults.NotFound() : TypedResults.Ok(Result);
-});
-app.MapGet("/all", Results<Ok<List<PersonWS>>, NotFound> () =>
-{
-	Console.WriteLine("GET-call to /all");
-	List<PersonWS> Result = [];
-	foreach (Person person in new SchleupenHomeworkContext().People.Include(person => person.Addresses).Include(person => person.Phones))
+	if ("first".Equals(sortBy))
+	{
+		if ("desc".Equals(ascDesc))
+		{
+			query = query.OrderByDescending(p => p.FirstName);
+		}
+		else
+		{
+			query = query.OrderBy(p => p.FirstName);
+		}
+	}
+	else if ("last".Equals(sortBy))
+	{
+		if ("desc".Equals(ascDesc))
+		{
+			query = query.OrderByDescending(p => p.LastName);
+		}
+		else
+		{
+			query = query.OrderBy(p => p.LastName);
+		}
+	}
+	else if ("birth".Equals(sortBy))
+	{
+		if ("desc".Equals(ascDesc))
+		{
+			query = query.OrderByDescending(p => p.DateOfBirth);
+		}
+		else
+		{
+			query = query.OrderBy(p => p.DateOfBirth);
+		}
+	}
+	foreach (Person person in query.ToList())
 	{
 		Result.Add(PersonWS.FromDbModel(person));
 	}
@@ -47,7 +76,7 @@ app.MapPost("person/", (PersonWS person) =>
 	Console.WriteLine("POST-call to /person/" + person.ToString());
 	SchleupenHomeworkContext context = new();
 	Person? existingPerson = context.People.Include(person => person.Addresses).Include(person => person.Phones).Where(p => p.PersonId == person.ID).FirstOrDefault();
-	if(existingPerson == null)
+	if (existingPerson == null)
 	{
 		context.Add(person.ToDbModel);
 	}
