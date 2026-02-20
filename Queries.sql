@@ -9,13 +9,14 @@ WHERE par.PersonID = p.PersonID AND par.AddressID = a.AddressID AND a.Town = 'Dr
 
 
 /* ------------------------------------------------------------------ Wie viele Personen haben mehr als eine Telefonnummer?*/
-SELECT COUNT(AddressCount)
+SELECT COUNT(PhoneCount)
 FROM (
-	SELECT COUNT(prv.AddressID) AS AddressCount
-	FROM Person p, PersonAddressRelation prv
-	WHERE prv.PersonID=p.PersonID
-	GROUP BY prv.PersonID) AS AddressNumbers 
-WHERE AddressCount > 1;
+	SELECT COUNT(ppr.PhoneID) AS PhoneCount
+	FROM Person p, PersonPhoneRelation ppr
+	WHERE ppr.PersonID=p.PersonID
+	GROUP BY ppr.PersonID
+) AS PhoneNumbers
+WHERE PhoneCount > 1;
 
 
 /* ------------------------------------------------------------------ Anzahl der Personen pro Ort*/
