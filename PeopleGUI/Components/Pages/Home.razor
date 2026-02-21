@@ -11,7 +11,7 @@
 	<div class="input-group mp-2">
 		<input id="searchfield" @bind="searchTerm" type="text" class="form-control" placeholder="Suche nach Namen ...">
 		<span class="input-group-btn">
-			<button id="searchbutton" class="btn btn-primary" type="button" onclick="location.href='/@searchTerm/@sortBy/@ascDesc'">Suche!</button>
+			<button id="searchbutton" class="btn btn-primary" type="button" onclick="location.href='@(string.IsNullOrEmpty(searchTerm) ? "" : "./" + searchTerm + "/" + @sortBy + "/" + @ascDesc)'">Suche!</button>
 		</span>
 	</div>
 	<div class="input-group input-group-sm mp-3" style="margin-top:1ex">
