@@ -1,7 +1,5 @@
 
-using System.Runtime.InteropServices.Marshalling;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using PeopleWS.DB.Models;
 using PeopleWS.DB;
 using PeopleWS.WsModels;
