@@ -27,13 +27,11 @@ GROUP BY a.Town;
 
 
 /* ------------------------------------------------------------------ Löschen von Telefonnummern*/
-DELETE p, ppr
-FROM Phone p, PersonPhoneRelation ppr
-WHERE (p.PhoneID=ppr.PhoneID) 
-	AND (
-		(p.CountryPrefix NOT LIKE '0049')
-		AND (p.CountryPrefix NOT LIKE'+%')
-	);
+ALTER TABLE PersonPhoneRelation DROP CONSTRAINT PersonPhonePhone;
+ALTER TABLE PersonPhoneRelation ADD CONSTRAINT PersonPhonePhone FOREIGN KEY(PhoneID) REFERENCES Phone(PhoneID) ON DELETE CASCADE;
+DELETE FROM Phone WHERE (CountryPrefix NOT LIKE '0049') AND (CountryPrefix NOT LIKE '+%');
+ALTER TABLE PersonPhoneRelation DROP CONSTRAINT PersonPhonePhone;
+ALTER TABLE PersonPhoneRelation ADD CONSTRAINT PersonPhonePhone FOREIGN KEY(PhoneID) REFERENCES Phone(PhoneID);
 
 
 /* ------------------------------------------------------------------ Upper-Case Name*/
