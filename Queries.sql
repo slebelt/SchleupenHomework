@@ -3,13 +3,13 @@ SELECT count(*) FROM Person;
 
 
 /* ------------------------------------------------------------------ Wie viele Personen wohnen in Dresden?*/
-SELECT COUNT(*)
+SELECT COUNT(*) AS "People in DD"
 FROM Person p, Address a, PersonAddressRelation par
 WHERE par.PersonID = p.PersonID AND par.AddressID = a.AddressID AND a.Town = 'Dresden';
 
 
 /* ------------------------------------------------------------------ Wie viele Personen haben mehr als eine Telefonnummer?*/
-SELECT COUNT(PhoneCount)
+SELECT COUNT(PhoneCount) AS "Number of people with more than one telefone number"
 FROM (
 	SELECT COUNT(ppr.PhoneID) AS PhoneCount
 	FROM Person p, PersonPhoneRelation ppr
@@ -20,7 +20,7 @@ WHERE PhoneCount > 1;
 
 
 /* ------------------------------------------------------------------ Anzahl der Personen pro Ort*/
-SELECT DISTINCT a.Town, COUNT(par.AddressID)
+SELECT DISTINCT a.Town, COUNT(par.AddressID) AS "Anzahl der Personen"
 FROM Address a, PersonAddressRelation par
 WHERE a.AddressID = par.AddressID
 GROUP BY a.Town;
